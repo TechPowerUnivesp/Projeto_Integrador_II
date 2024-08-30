@@ -1,6 +1,6 @@
 # Projeto_Integrador_II Grupo 021
 
-Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de geografia. 
+Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de Geografia.
 
 <br>
 
@@ -16,3 +16,15 @@ Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o �
 
 ### • [Mauri Junior](https://github.com/maurijr1)
 
+# React + Vite
+
+Para iniciar Frontend:
+Abrir terminal
+npm run dev
+
+Para iniciar o Backend:
+Abrir terminal
+node server.js
+
+O Frontend utiliza o Axios para fazer uma requisição HTTP, como um POST para o endpoint /login no servidor backend.
+O Backend, utilizando a API Express, recebe a requisição, se conecta ao banco de dados MySQL com a biblioteca mysql2, verifica as credenciais enviadas e retorna a resposta ao Frontend.
