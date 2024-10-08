@@ -12,7 +12,7 @@ Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o �
 
 ### • [Luana Tacuatia](https://github.com/luana-tacuatia)
 
-### • [Marcelo Gigliotti]()
+### • [Marcelo Gigliotti](https://github.com/MSgigliotti)
 
 ### • [Mauri Junior](https://github.com/maurijr1)
 
@@ -24,7 +24,7 @@ npm run dev
 
 Para iniciar o Backend:
 Abrir terminal
-node server.js
+node src/server.js
 
 O Frontend utiliza o Axios para fazer uma requisição HTTP, como um POST para o endpoint /login no servidor backend.
 O Backend, utilizando a API Express, recebe a requisição, se conecta ao banco de dados MySQL com a biblioteca mysql2, verifica as credenciais enviadas e retorna a resposta ao Frontend.
