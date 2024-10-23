@@ -9,22 +9,24 @@ function Login() {
     event.preventDefault()
 
     try {
-      const response = await axios.post('http://localhost:3001/login', {
-        username,
-        password,
-      })
+      const response = await axios.post(
+        'http://localhost:3001/api/professor/login',
+        {
+          username,
+          password,
+        }
+      )
 
       if (response.data.success) {
         // Redireciona para a área do professor
         window.location.href = '/AreaProfessor'
       } else {
-        // Exibe um alerta na tela
-        alert('Usuário ou senha incorretos')
+        // Exibe um alerta na tela com a mensagem de erro específica
+        alert(response.data.message)
       }
     } catch (error) {
-      // Exibe um alerta na tela
+      console.error('Erro ao fazer login:', error)
       alert('Erro ao fazer login')
-      console.error('Erro ao fazer login', error)
     }
   }
 
@@ -49,7 +51,7 @@ function Login() {
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       autoComplete="username"
-                    ></input>
+                    />
                   </div>
                   <div className="form-group">
                     <label htmlFor="password">Senha</label>
@@ -61,7 +63,7 @@ function Login() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       autoComplete="current-password"
-                    ></input>
+                    />
                   </div>
                   <div className="d-flex justify-content-center mb-3">
                     <button
