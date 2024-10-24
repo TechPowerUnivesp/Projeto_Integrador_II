@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import router from './routes/login.js'
+import loginRouter from './routes/login.js'
+import questaoRouter from './routes/questao.js'
+import respostaRouter from './routes/resposta.js'
 import sequelize from './config/db.js'
 
 const app = express()
@@ -9,16 +11,18 @@ const PORT = 3001
 app.use(cors())
 app.use(express.json())
 
-// Use o roteador de login
-app.use('/api', router)
+// Use the routers
+app.use('/api', loginRouter)
+app.use('/api', questaoRouter)
+app.use('/api', respostaRouter)
 
-// Verifique a conexão com o banco de dados e sincronize
+// Verify the database connection and synchronize
 sequelize
   .authenticate()
   .then(() => {
     console.log('Conectado ao banco de dados com sucesso.')
 
-    // Sincronizar o Sequelize com o banco de dados
+    // Synchronize Sequelize with the database
     return sequelize.sync()
   })
   .then(() => {
