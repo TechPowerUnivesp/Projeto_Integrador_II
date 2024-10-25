@@ -5,7 +5,7 @@ function AreaProfessor() {
     const [alunos, setAlunos] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/formulario')
+        axios.get('http://localhost:3001/api/alunos')
             .then(response => {
                 setAlunos(response.data);
             })
@@ -18,7 +18,7 @@ function AreaProfessor() {
     const handleDelete = (id) => {
         const confirmDelete = window.confirm("Você tem certeza que deseja excluir?");
         if (confirmDelete) {
-            axios.delete(`http://localhost:3000/formulario/${id}`)
+            axios.delete(`http://localhost:3001/api/alunos/${id}`)
                 .then(() => {
                     setAlunos(alunos.filter(aluno => aluno.id !== id));
                 })
