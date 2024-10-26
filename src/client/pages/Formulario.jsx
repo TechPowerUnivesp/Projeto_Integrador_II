@@ -11,6 +11,7 @@ function Formulario() {
 
   const handleDisciplinaChange = (event) => {
     setDisciplina(event.target.value)
+    console.log('Disciplina alterada para:', event.target.value)
   }
 
   const handleDisciplinaSubmit = async (event) => {
@@ -25,9 +26,12 @@ function Formulario() {
         ? `http://localhost:3001/api/questoes`
         : `http://localhost:3001/api/questoes?disciplina=${disciplina}`
 
+    console.log('URL chamada:', url)
+
     try {
       const response = await axios.get(url)
       setQuestoes(response.data)
+      console.log('Questões carregadas:', response.data)
     } catch (error) {
       console.error('Erro ao carregar questões:', error)
     } finally {
@@ -142,7 +146,7 @@ function Formulario() {
                 >
                   <option value="">Selecione a temática</option>
                   <option value="todas">Todas</option>
-                  <option value="Geografia fisica">Geografia física</option>
+                  <option value="Geografia física">Geografia física</option>
                   <option value="Geografia urbana">Geografia urbana</option>
                   <option value="Cartografia">Cartografia</option>
                 </select>
@@ -152,7 +156,7 @@ function Formulario() {
                 className="btn btn-primary btn-block"
                 disabled={loading}
               >
-                {loading ? 'Carregando...' : 'Carregar Questões'}
+                {loading ? 'Carregando...' : 'Carregar questões'}
               </button>
             </form>
             {/* Formulário para responder as questões e enviar */}
@@ -217,7 +221,7 @@ function Formulario() {
                   </div>
                 ))}
                 <button type="submit" className="btn btn-primary btn-block">
-                  Enviar Respostas
+                  Enviar respostas
                 </button>
               </form>
             )}

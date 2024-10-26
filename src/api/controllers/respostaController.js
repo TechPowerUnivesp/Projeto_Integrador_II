@@ -5,7 +5,7 @@ import Questao from '../models/Questao.js'
 const respostaController = {
   enviarRespostas: async (req, res) => {
     const { numeroChamada, numeroTurma, respostas } = req.body
-
+    console.log('Respostas recebidas:', req.body)
     try {
       // Cria uma nova avaliação
       const avaliacao = await Avaliacao.create({
@@ -15,7 +15,7 @@ const respostaController = {
 
       // Salva as respostas na tabela respostas_aluno
       for (const [perguntaKey, resposta_id] of Object.entries(respostas)) {
-        const questao_id = parseInt(perguntaKey.replace('pergunta', ''), 10) // Extrai o ID da questão e converte para inteiro
+        const questao_id = parseInt(perguntaKey.replace('questao', ''), 10) // Extrai o ID da questão e converte para inteiro
         if (isNaN(questao_id) || questao_id <= 0) {
           throw new Error(`Invalid questao_id extracted from ${perguntaKey}`)
         }
