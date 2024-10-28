@@ -18,7 +18,7 @@ const Resposta = sequelize.define(
       allowNull: false,
     },
     Correta: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
     },
   },
