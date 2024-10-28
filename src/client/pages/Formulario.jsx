@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import './Formulario.css'
 
 function Formulario() {
@@ -8,6 +9,17 @@ function Formulario() {
   const [disciplina, setDisciplina] = useState('')
   const [questoes, setQuestoes] = useState([])
   const [loading, setLoading] = useState(false)
+  const [mensagemSucesso, setMensagemSucesso] = useState('')
+  const [enviando, setEnviando] = useState(false)
+  const [resultados, setResultados] = useState([])
+  const [totalAcertos, setTotalAcertos] = useState(0)
+  const [mostrarResultados, setMostrarResultados] = useState(false)
+  const [respostasUsuario, setRespostasUsuario] = useState({})
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
 
   const handleDisciplinaChange = (event) => {
     setDisciplina(event.target.value)
@@ -16,9 +28,6 @@ function Formulario() {
   const handleDisciplinaSubmit = async (event) => {
     event.preventDefault()
     setLoading(true)
-
-    // Adiciona debug para ver qual URL está sendo chamada
-    console.log('Disciplina selecionada:', disciplina)
 
     const url =
       disciplina === 'todas'
@@ -37,14 +46,18 @@ function Formulario() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (enviando) return
 
+    setEnviando(true)
+
+    // Obter as respostas do usuário
     const respostas = {}
     questoes.forEach((questao) => {
       const respostaSelecionada = document.querySelector(
         `input[name="questao${questao.id}"]:checked`
       )
       if (respostaSelecionada) {
-        respostas[`questao${questao.id}`] = respostaSelecionada.value
+        respostas[questao.id] = respostaSelecionada.value
       }
     })
 
@@ -55,18 +68,37 @@ function Formulario() {
     }
 
     try {
+      // Enviar as respostas e receber os resultados
       const response = await axios.post(
         'http://localhost:3001/api/respostas',
         payload
       )
-      console.log('Respostas enviadas com sucesso:', response.data)
+
+      // Armazenar os resultados no estado para verificação
+      setMensagemSucesso('Respostas enviadas com sucesso!')
+      setResultados(response.data.resultados || [])
+      setTotalAcertos(response.data.totalAcertos || 0)
+      setRespostasUsuario(respostas)
+      setMostrarResultados(true)
     } catch (error) {
       console.error('Erro ao enviar respostas:', error)
+      setMensagemSucesso('Erro ao enviar respostas. Tente novamente.')
+    } finally {
+      setEnviando(false)
     }
   }
 
-  const getOptionLetter = (index) => {
-    return String.fromCharCode(97 + index) // 97 é o código ASCII para 'a'
+  const getOptionLetter = (index) => String.fromCharCode(65 + index)
+
+  const isRespostaCorreta = (questaoId, respostaId) => {
+    console.log('Verificando questão:', questaoId, 'resposta:', respostaId)
+    const resultado = resultados.find(
+      (res) =>
+        res.questao_id === parseInt(questaoId, 10) &&
+        res.resposta_id === respostaId.toString()
+    )
+    console.log('Resultado encontrado:', resultado)
+    return resultado ? resultado.correta : null
   }
 
   return (
@@ -110,6 +142,7 @@ function Formulario() {
           </ul>
         </div>
       </nav>
+
       {/* Jumbotron */}
       <div className="jumbotron jumbotron-fluid text-center bg-light">
         <div className="container">
@@ -120,16 +153,12 @@ function Formulario() {
           </p>
         </div>
       </div>
-      {/* Formulario */}
+
+      {/* Formulário */}
       <div className="container mt-5 bg-secondary text-light rounded-lg p-3 mb-5">
         <div className="row">
           <div className="col-md-8 offset-md-2">
-            {/* Seleção da disciplina e carregar as questões */}
-            <form
-              onSubmit={handleDisciplinaSubmit}
-              method="post"
-              className="needs-validation"
-            >
+            <form onSubmit={handleDisciplinaSubmit}>
               <div className="form-group">
                 <label htmlFor="disciplinaInput">Escolha a temática</label>
                 <select
@@ -137,12 +166,11 @@ function Formulario() {
                   value={disciplina}
                   className="form-control"
                   id="disciplinaInput"
-                  name="disciplina"
                   required
                 >
                   <option value="">Selecione a temática</option>
                   <option value="todas">Todas</option>
-                  <option value="Geografia fisica">Geografia física</option>
+                  <option value="Geografia física">Geografia física</option>
                   <option value="Geografia urbana">Geografia urbana</option>
                   <option value="Cartografia">Cartografia</option>
                 </select>
@@ -155,13 +183,9 @@ function Formulario() {
                 {loading ? 'Carregando...' : 'Carregar Questões'}
               </button>
             </form>
-            {/* Formulário para responder as questões e enviar */}
-            {Array.isArray(questoes) && questoes.length > 0 && (
-              <form
-                onSubmit={handleSubmit}
-                method="post"
-                className="needs-validation mt-5"
-              >
+
+            {questoes.length > 0 && !mostrarResultados && (
+              <form onSubmit={handleSubmit} className="mt-5">
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="numeroTurmaInput">Número da turma:</label>
@@ -170,7 +194,6 @@ function Formulario() {
                       type="text"
                       className="form-control"
                       id="numeroTurmaInput"
-                      name="numeroTurma"
                       required
                     />
                   </div>
@@ -183,7 +206,6 @@ function Formulario() {
                       type="text"
                       className="form-control"
                       id="numeroChamadaInput"
-                      name="numeroChamada"
                       required
                     />
                   </div>
@@ -198,10 +220,11 @@ function Formulario() {
                         <input
                           className="form-check-input"
                           type="radio"
-                          name={`questao${questao.id}`}
-                          id={`questao${questao.id}_resposta${resposta.ID}`}
+                          name={`questao${questao.id}`} // Assegurando que o nome seja correto
+                          id={`questao${questao.id}_resposta${resposta.ID}`} // Usando a resposta.ID correta
                           value={resposta.ID}
                           required
+                          disabled={mostrarResultados}
                         />
                         <label
                           className="form-check-label"
@@ -209,17 +232,74 @@ function Formulario() {
                         >
                           <span className="option-letter">
                             {getOptionLetter(respostaIndex)}
-                          </span>
+                          </span>{' '}
                           {resposta.texto_resposta}
+                          {mostrarResultados &&
+                            respostasUsuario[`questao${questao.id}`] ===
+                              resposta.ID &&
+                            (isRespostaCorreta(questao.id, resposta.ID)
+                              ? ' - Correta'
+                              : ' - Incorreta')}
                         </label>
                       </div>
                     ))}
                   </div>
                 ))}
-                <button type="submit" className="btn btn-primary btn-block">
+                <button type="submit" className="btn btn-success btn-block">
                   Enviar Respostas
                 </button>
               </form>
+            )}
+
+            {mostrarResultados && (
+              <div className="mt-5">
+                <h4>
+                  Total de acertos: {totalAcertos} de {questoes.length}
+                </h4>
+                {questoes.map((questao) => (
+                  <div key={questao.id} className="questao-resposta">
+                    <h5>{questao.enunciado}</h5>
+                    {questao.respostas.map((resposta) => (
+                      <p key={resposta.ID}>
+                        <span className="option-letter">
+                          {getOptionLetter(questao.respostas.indexOf(resposta))}
+                        </span>{' '}
+                        {resposta.texto_resposta}
+                        {isRespostaCorreta(questao.id, resposta.ID) !==
+                          null && (
+                          <span
+                            className={
+                              isRespostaCorreta(questao.id, resposta.ID)
+                                ? 'correta'
+                                : 'incorreta'
+                            }
+                          >
+                            {isRespostaCorreta(questao.id, resposta.ID)
+                              ? ' - Correta'
+                              : ' - Incorreta'}
+                          </span>
+                        )}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {mensagemSucesso && (
+              <div className="alert alert-success mt-3" role="alert">
+                {mensagemSucesso}
+              </div>
+            )}
+
+            {/* Botão para redirecionar para o início */}
+            {mostrarResultados && (
+              <button
+                className="btn btn-primary btn-block mt-3"
+                onClick={() => navigate('/')}
+              >
+                Voltar ao início
+              </button>
             )}
           </div>
         </div>
