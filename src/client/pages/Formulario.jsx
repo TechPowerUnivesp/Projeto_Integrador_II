@@ -108,7 +108,7 @@ function Formulario() {
         <a className="navbar-brand" href="/">
           <img
             src="/assets/img/geoteca.jpg"
-            alt="Logo"
+            alt="Logo da Geoteca" // alt para acessibilidade
             width="100px"
             className="img-logo rounded"
           />
@@ -166,6 +166,7 @@ function Formulario() {
                   value={disciplina}
                   className="form-control"
                   id="disciplinaInput"
+                  aria-required="true" // Indica que o campo é obrigatório
                   required
                 >
                   <option value="">Selecione a temática</option>
@@ -194,6 +195,7 @@ function Formulario() {
                       type="text"
                       className="form-control"
                       id="numeroTurmaInput"
+                      aria-required="true" // Indica obrigatoriedade para o leitor de tela
                       required
                     />
                   </div>
@@ -206,6 +208,7 @@ function Formulario() {
                       type="text"
                       className="form-control"
                       id="numeroChamadaInput"
+                      aria-required="true" // Indica obrigatoriedade para o leitor de tela
                       required
                     />
                   </div>
