@@ -30,9 +30,9 @@ export const getRespostasAluno = async (req, res) => {
     console.log(
       `Buscando respostas para turma ${numero_turma}, chamada ${numero_chamada}`
     )
+
     const respostasAluno = await RespostasAluno.findAll({
       where: { numero_turma, numero_chamada },
-      attributes: ['numero_chamada', 'numero_turma'],
       include: [
         {
           model: Questao,
@@ -46,12 +46,6 @@ export const getRespostasAluno = async (req, res) => {
         },
       ],
     })
-
-    if (!respostasAluno.length) {
-      return res
-        .status(404)
-        .json({ message: 'Respostas não encontradas para o aluno' })
-    }
 
     res.json(respostasAluno)
   } catch (error) {

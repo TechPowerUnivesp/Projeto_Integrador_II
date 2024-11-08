@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import './Formulario.css'
 
 function AreaProfessor() {
   const [alunos, setAlunos] = useState([])
