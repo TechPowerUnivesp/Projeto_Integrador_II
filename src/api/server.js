@@ -1,8 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import loginRouter from './routes/login.js'
-import questaoRouter from './routes/questao.js'
-import respostaRouter from './routes/resposta.js'
+import loginRouter from './routes/loginRouter.js'
+import questaoRouter from './routes/questaoRouter.js'
+import respostaRouter from './routes/respostaRouter.js'
+import alunosRouter from './routes/alunosRouter.js'
 import sequelize from './config/db.js'
 
 const app = express()
@@ -12,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 
 // Use the routers
+app.use('/api', alunosRouter)
 app.use('/api', loginRouter)
 app.use('/api', questaoRouter)
 app.use('/api', respostaRouter)

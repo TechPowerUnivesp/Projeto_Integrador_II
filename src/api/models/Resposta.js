@@ -16,6 +16,10 @@ const Resposta = sequelize.define(
     ID_questao: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'questao',
+        key: 'id',
+      },
     },
     Correta: {
       type: DataTypes.TINYINT,

@@ -1,5 +1,4 @@
-import Questao from '../models/Questao.js'
-import Resposta from '../models/Resposta.js'
+import { Questao, Resposta } from '../models/indexModels.js'
 import Sequelize from 'sequelize'
 
 const questaoController = {

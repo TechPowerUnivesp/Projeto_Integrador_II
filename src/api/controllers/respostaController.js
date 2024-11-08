@@ -1,7 +1,9 @@
-import RespostasAluno from '../models/RespostasAluno.js'
-import Avaliacao from '../models/Avaliacao.js'
-import Questao from '../models/Questao.js'
-import Resposta from '../models/Resposta.js'
+import {
+  RespostasAluno,
+  Avaliacao,
+  Questao,
+  Resposta,
+} from '../models/indexModels.js'
 
 const respostaController = {
   enviarRespostas: async (req, res) => {
@@ -71,13 +73,11 @@ const respostaController = {
       await Promise.all(promises)
 
       console.log('Respostas processadas com sucesso')
-      res
-        .status(200)
-        .json({
-          message: 'Respostas enviadas com sucesso',
-          resultados,
-          totalAcertos,
-        })
+      res.status(200).json({
+        message: 'Respostas enviadas com sucesso',
+        resultados,
+        totalAcertos,
+      })
     } catch (error) {
       console.error('Erro ao enviar respostas:', error)
       res.status(500).json({ message: 'Erro ao enviar respostas' })

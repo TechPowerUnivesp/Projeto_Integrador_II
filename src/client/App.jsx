@@ -14,7 +14,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/AreaProfessor" element={<AreaProfessor />} />
         <Route path="/Gabarito" element={<Gabarito />} />
-        <Route path="/DetalhesAluno/:id" element={<DetalhesAluno />} />
+        <Route path="/DetalhesAluno" element={<DetalhesAluno />} />
       </Routes>
     </BrowserRouter>
   )
