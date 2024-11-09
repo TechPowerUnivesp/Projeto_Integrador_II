@@ -92,9 +92,10 @@ function Formulario() {
 
   const isRespostaCorreta = (questaoId, respostaId) => {
     console.log('Verificando questão:', questaoId, 'resposta:', respostaId)
+    console.log('Resultados:', resultados)
     const resultado = resultados.find(
       (res) =>
-        res.questao_id === parseInt(questaoId, 10) &&
+        res.questao_id === parseInt(questaoId) &&
         res.resposta_id === respostaId.toString()
     )
     console.log('Resultado encontrado:', resultado)
@@ -108,7 +109,7 @@ function Formulario() {
         <a className="navbar-brand" href="/">
           <img
             src="/assets/img/geoteca.jpg"
-            alt="Logo da Geoteca" // alt para acessibilidade
+            alt="Logo" // alt para acessibilidade
             width="100px"
             className="img-logo rounded"
           />
@@ -181,7 +182,7 @@ function Formulario() {
                 className="btn btn-primary btn-block"
                 disabled={loading}
               >
-                {loading ? 'Carregando...' : 'Carregar Questões'}
+                {loading ? 'Carregando...' : 'Carregar questões'}
               </button>
             </form>
 
@@ -219,19 +220,19 @@ function Formulario() {
                       {questao.enunciado}
                     </label>
                     {questao.respostas.map((resposta, respostaIndex) => (
-                      <div key={resposta.ID} className="form-check">
+                      <div key={resposta.id} className="form-check">
                         <input
                           className="form-check-input"
                           type="radio"
                           name={`questao${questao.id}`} // Assegurando que o nome seja correto
-                          id={`questao${questao.id}_resposta${resposta.ID}`} // Usando a resposta.ID correta
-                          value={resposta.ID}
+                          id={`questao${questao.id}_resposta${resposta.id}`} // Usando a resposta.ID correta
+                          value={resposta.id}
                           required
                           disabled={mostrarResultados}
                         />
                         <label
                           className="form-check-label"
-                          htmlFor={`questao${questao.id}_resposta${resposta.ID}`}
+                          htmlFor={`questao${questao.id}_resposta${resposta.id}`}
                         >
                           <span className="option-letter">
                             {getOptionLetter(respostaIndex)}
@@ -239,8 +240,8 @@ function Formulario() {
                           {resposta.texto_resposta}
                           {mostrarResultados &&
                             respostasUsuario[`questao${questao.id}`] ===
-                              resposta.ID &&
-                            (isRespostaCorreta(questao.id, resposta.ID)
+                              resposta.id &&
+                            (isRespostaCorreta(questao.id, resposta.id)
                               ? ' - Correta'
                               : ' - Incorreta')}
                         </label>
@@ -263,23 +264,23 @@ function Formulario() {
                   <div key={questao.id} className="questao-resposta">
                     <h5>{questao.enunciado}</h5>
                     {questao.respostas.map((resposta) => (
-                      <p key={resposta.ID}>
+                      <p key={resposta.id}>
                         <span className="option-letter">
                           {getOptionLetter(questao.respostas.indexOf(resposta))}
                         </span>{' '}
                         {resposta.texto_resposta}
-                        {isRespostaCorreta(questao.id, resposta.ID) !==
+                        {isRespostaCorreta(questao.id, resposta.id) !==
                           null && (
                           <span
                             className={
-                              isRespostaCorreta(questao.id, resposta.ID)
+                              isRespostaCorreta(questao.id, resposta.id)
                                 ? 'correta'
                                 : 'incorreta'
                             }
                           >
-                            {isRespostaCorreta(questao.id, resposta.ID)
-                              ? ' - Correta'
-                              : ' - Incorreta'}
+                            {isRespostaCorreta(questao.id, resposta.id)
+                              ? ' (Correta)'
+                              : ' (Incorreta)'}
                           </span>
                         )}
                       </p>

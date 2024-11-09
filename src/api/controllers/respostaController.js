@@ -1,9 +1,4 @@
-import {
-  RespostasAluno,
-  Avaliacao,
-  Questao,
-  Resposta,
-} from '../models/indexModels.js'
+import { RespostasAluno, Avaliacao, Resposta } from '../models/indexModels.js'
 
 const respostaController = {
   enviarRespostas: async (req, res) => {
@@ -26,61 +21,49 @@ const respostaController = {
       const resultados = []
 
       const promises = Object.entries(respostas).map(
-        async ([perguntaKey, resposta_id]) => {
-          const questao_id = parseInt(perguntaKey.replace('questao', ''), 10)
+        async ([questaoId, respostaId]) => {
           console.log(
-            `Processando questão ID: ${questao_id}, resposta ID: ${resposta_id}`
+            `Processando questão ID: ${questaoId}, resposta ID: ${respostaId}`
           )
 
-          const questaoExiste = await Questao.findByPk(questao_id)
-          if (!questaoExiste) {
-            console.log(`Questão com ID ${questao_id} não encontrada`)
-            return
-          }
-
-          const resposta = await Resposta.findByPk(resposta_id)
-          if (!resposta) {
-            console.log(`Resposta com ID ${resposta_id} não encontrada`)
-            return
-          }
-
-          const correta = resposta.Correta === 1
-          console.log(
-            `Resposta encontrada: ${resposta_id}, Correta: ${correta}`
-          )
-
-          if (correta) {
-            totalAcertos++
-          }
-
-          resultados.push({
-            questao_id,
-            resposta_id,
-            correta,
+          // Busca a resposta no banco de dados
+          const resposta = await Resposta.findOne({
+            where: { id: respostaId },
           })
 
-          await RespostasAluno.create({
-            numero_chamada: numeroChamada,
-            numero_turma: numeroTurma,
-            avaliacao_id: avaliacao.id,
-            questao_id: questao_id,
-            resposta_id: parseInt(resposta_id, 10),
-            correta,
-          })
+          if (resposta) {
+            console.log(
+              `Resposta encontrada: ${respostaId}, Correta: ${resposta.correta}`
+            )
+
+            // Adiciona o resultado ao array de resultados
+            resultados.push({
+              questao_id: parseInt(questaoId.replace('questao', ''), 10),
+              resposta_id: respostaId,
+              correta: resposta.correta,
+            })
+
+            // Salva a resposta do aluno na tabela respostas_aluno
+            await RespostasAluno.create({
+              numero_chamada: numeroChamada,
+              numero_turma: numeroTurma,
+              avaliacao_id: avaliacao.id,
+              questao_id: parseInt(questaoId.replace('questao', ''), 10),
+              resposta_id: respostaId,
+            })
+          }
         }
       )
 
       await Promise.all(promises)
 
-      console.log('Respostas processadas com sucesso')
-      res.status(200).json({
-        message: 'Respostas enviadas com sucesso',
-        resultados,
-        totalAcertos,
-      })
+      // Calcula o total de acertos
+      totalAcertos = resultados.filter((res) => res.correta === 1).length
+
+      res.json({ resultados, totalAcertos })
     } catch (error) {
-      console.error('Erro ao enviar respostas:', error)
-      res.status(500).json({ message: 'Erro ao enviar respostas' })
+      console.error('Erro ao processar respostas:', error)
+      res.status(500).json({ error: 'Erro ao processar respostas' })
     }
   },
 }
