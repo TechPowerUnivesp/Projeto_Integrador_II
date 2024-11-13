@@ -32,14 +32,12 @@ function DetalhesAluno() {
     }
   }, [numero_turma, numero_chamada])
 
-  console.log('ALUNO', respostas)
-
   return (
     <>
       {/* Jumbotron */}
       <div className="jumbotron jumbotron-fluid text-center p-3 mb-2 bg-primary text-white">
         <div className="container">
-          <h1 className="display-4">Respostas do Aluno</h1>
+          <h1 className="display-4">Respostas do aluno</h1>
           <p className="lead">
             Confira aqui as respostas das questões do formulário.
           </p>
@@ -49,7 +47,7 @@ function DetalhesAluno() {
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-8 offset-md-2">
-            <h3 className="display-5">Detalhes do Aluno</h3>
+            <h3 className="display-5">Detalhes do aluno</h3>
             <p className="lead">
               Turma: <strong>{numero_turma}</strong>
             </p>
@@ -61,7 +59,7 @@ function DetalhesAluno() {
         {/* Respostas do Formulário */}
         <div className="row">
           <div className="col-md-8 offset-md-2">
-            <h4>Respostas do Formulário</h4>
+            <h4>Respostas do formulário</h4>
             {respostas.length > 0 ? (
               respostas.map((respostaAluno) => {
                 const { id, questao, resposta_id } = respostaAluno
@@ -95,14 +93,14 @@ function DetalhesAluno() {
                             : ''
                         }`}
                       >
-                        <strong>Resposta do Aluno:</strong>{' '}
+                        <strong>Resposta do aluno:</strong>{' '}
                         {respostaSelecionada
                           ? respostaSelecionada.texto_resposta
                           : 'Não respondida'}
                       </p>
                       {/* Resposta Correta */}
                       <p className="card-text text-success">
-                        <strong>Resposta Correta:</strong>{' '}
+                        <strong>Resposta correta:</strong>{' '}
                         {respostaCorreta
                           ? respostaCorreta.texto_resposta
                           : 'Não disponível'}

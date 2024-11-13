@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import './Formulario.css'
 
 function Formulario() {
@@ -15,7 +14,6 @@ function Formulario() {
   const [totalAcertos, setTotalAcertos] = useState(0)
   const [mostrarResultados, setMostrarResultados] = useState(false)
   const [respostasUsuario, setRespostasUsuario] = useState({})
-  const navigate = useNavigate()
 
   useEffect(() => {
     localStorage.clear()
@@ -150,7 +148,7 @@ function Formulario() {
           <h1 className="display-4">Bem-vindo à Geoteca</h1>
           <p className="lead">
             Após escolher a temática, insira o número da sua turma, o número da
-            sua chamada, responda a ficha de estudo e clique no botão ‘Enviar’.
+            sua chamada, responda a ficha de estudo e clique no botão "Enviar".
           </p>
         </div>
       </div>
@@ -298,12 +296,11 @@ function Formulario() {
 
             {/* Botão para redirecionar para o início */}
             {mostrarResultados && (
-              <button
-                className="btn btn-primary btn-block mt-3"
-                onClick={() => navigate('/')}
-              >
-                Voltar ao início
-              </button>
+              <div className="d-flex justify-content-center mb-3">
+                <a href="/" className="btn btn-primary">
+                  Voltar ao início
+                </a>
+              </div>
             )}
           </div>
         </div>

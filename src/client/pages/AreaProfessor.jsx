@@ -18,21 +18,6 @@ function AreaProfessor() {
     fetchAlunos()
   }, [])
 
-  // Função para lidar com a exclusão
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm('Você tem certeza que deseja excluir?')
-    if (confirmDelete) {
-      axios
-        .delete(`http://localhost:3001/api/alunos/${id}`)
-        .then(() => {
-          setAlunos(alunos.filter((aluno) => aluno.id !== id))
-        })
-        .catch((error) => {
-          console.error('Error:', error)
-        })
-    }
-  }
-
   return (
     <>
       {/* <!-- Navbar --> */}
@@ -67,11 +52,6 @@ function AreaProfessor() {
                 Início <span className="sr-only">(current)</span>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/Gabarito">
-                Gabarito
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
@@ -99,13 +79,6 @@ function AreaProfessor() {
                     >
                       <i className="fa fa-file-text-o"></i>
                     </a>
-
-                    <button
-                      onClick={() => handleDelete(aluno.id)}
-                      className="btn btn-danger ml-3"
-                    >
-                      <i className="fa fa-trash"></i>
-                    </button>
                   </div>
                 </li>
               ))}
