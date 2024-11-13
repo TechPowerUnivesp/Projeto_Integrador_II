@@ -1,0 +1,39 @@
+.form-check-input {
+  display: none; /* Esconde o input do tipo radio */
+}
+
+.form-check-label {
+  display: flex; /* Utiliza flexbox para alinhamento */
+  align-items: center; /* Centraliza verticalmente o conteúdo */
+  cursor: pointer; /* Muda o cursor ao passar sobre o label */
+}
+
+.option-letter {
+  display: inline-block; /* Exibe a letra da opção em linha */
+  width: 20px; /* Largura do círculo da opção */
+  height: 20px; /* Altura do círculo da opção */
+  border: 1px solid #000; /* Borda preta ao redor do círculo */
+  border-radius: 50%; /* Torna o círculo arredondado */
+  text-align: center; /* Centraliza o texto dentro do círculo */
+  line-height: 20px; /* Alinha verticalmente o texto dentro do círculo */
+  margin-right: 10px; /* Espaço à direita do círculo */
+  background-color: #fff; /* Fundo branco do círculo */
+  color: #000; /* Cor da letra */
+  transition: background-color 0.3s, color 0.3s;
+  flex-shrink: 0; /* Evita que o elemento seja redimensionado */
+}
+
+.form-check-input:checked + .form-check-label .option-letter {
+  background-color: #0b408f; /* Cor de fundo azul ao selecionar */
+  color: #acb9a7; /* Cor do texto branca ao selecionar */
+}
+
+.correta {
+  color: rgb(30, 143, 30); /* Respostas corretas em verde */
+  background-color: #fff; /* Fundo branco para respostas corretas */
+}
+
+.incorreta {
+  color: rgb(196, 47, 47); /* Respostas incorretas em vermelho */
+  background-color: #dbcaca; /* Fundo branco para respostas corretas */
+}
