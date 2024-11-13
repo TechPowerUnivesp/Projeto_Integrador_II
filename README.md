@@ -51,7 +51,7 @@ As rotas para login e registro de professores e alunos são definidas no arquivo
 ## Iniciar o projeto
 
 Esse projeto foi desenvolvido usando Node.js versão 20.17.0.
-Para instalação das dependências, abra um terminal, navegue até diretórios src/api e src/client e execute o comando:
+Para instalação das dependências, abra um terminal, navegue até os diretórios src/api e src/client e execute o comando:
 
 ```sh
 npm install
@@ -67,7 +67,7 @@ npm run start
 
 ### Iniciar o front-end
 
-Para iniciar o front-end, abra um terminal, navegue até o diretório `src/client` e execute o comando:
+Para iniciar o front-end, navegue até o diretório `src/client` e execute o comando:
 
 ```sh
 npm run dev
