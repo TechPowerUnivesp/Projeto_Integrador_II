@@ -32,8 +32,6 @@ O Backend é construído utilizando Node.js e Express para criar uma API RESTful
 - **MySQL**: Sistema de gerenciamento de banco de dados relacional.
 - **mysql2**: Biblioteca para conectar ao banco de dados MySQL.
 
-### Estrutura do Projeto
-
 ### Configuração do Banco de Dados
 
 O arquivo `db.js` na pasta `config` é responsável por configurar a conexão com o banco de dados MySQL utilizando o Sequelize e a biblioteca `mysql2`.
@@ -50,15 +48,24 @@ Os controladores `professorController.js` e ``na pasta`controllers` contêm a l�
 
 As rotas para login e registro de professores e alunos são definidas no arquivo `login.js` na pasta `routes`.
 
-### Iniciar o Backend
+## Iniciar o projeto
 
-Para iniciar o back-end, abra um terminal, navegue até o diretório `src/api` e execute o comando:
+Esse projeto foi desenvolvido usando Node.js versão 20.17.0.
+Para instalação das dependências, abra um terminal, navegue até diretórios src/api e src/client e execute o comando:
+
+```sh
+npm install
+```
+
+### Iniciar o back-end
+
+No terminal, navegue até o diretório `src/api` e execute os comando:
 
 ```sh
 npm run start
 ```
 
-### Iniciar o Front-end
+### Iniciar o front-end
 
 Para iniciar o front-end, abra um terminal, navegue até o diretório `src/client` e execute o comando:
 
