@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from "react-router-dom";
 import './Formulario.css'
 
 function AreaProfessor() {
@@ -85,6 +86,11 @@ function AreaProfessor() {
             </ol>
           </div>
         </div>
+      </div>
+      <div className="d-flex justify-content-center mt-4">
+        <Link to="/estatisticas" className="btn btn-info">
+          📊 Ver Estatísticas da Turma
+        </Link>
       </div>
       <br></br>
     </>
