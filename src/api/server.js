@@ -5,6 +5,7 @@ import questaoRouter from './routes/questaoRouter.js'
 import respostaRouter from './routes/respostaRouter.js'
 import alunosRouter from './routes/alunosRouter.js'
 import sequelize from './config/db.js'
+import estatisticasRouter from './routes/estatisticasRouter.js'
 
 const app = express()
 const PORT = 3001
@@ -17,6 +18,7 @@ app.use('/api', alunosRouter)
 app.use('/api', loginRouter)
 app.use('/api', questaoRouter)
 app.use('/api', respostaRouter)
+app.use('/api', estatisticasRouter)
 
 // Verify the database connection and synchronize
 sequelize
