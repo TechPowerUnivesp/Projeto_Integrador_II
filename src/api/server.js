@@ -6,6 +6,7 @@ import respostaRouter from './routes/respostaRouter.js'
 import alunosRouter from './routes/alunosRouter.js'
 import sequelize from './config/db.js'
 import estatisticasRouter from './routes/estatisticasRouter.js'
+import { seedDatabase } from './seed_db.js'
 
 const app = express()
 const PORT = 3001
@@ -31,6 +32,7 @@ sequelize
   })
   .then(() => {
     app.listen(PORT, () => {
+      seedDatabase();
       console.log(`Servidor rodando na porta ${PORT}`)
     })
   })
