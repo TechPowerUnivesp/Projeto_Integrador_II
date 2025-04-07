@@ -1,6 +1,6 @@
-# Projeto_Integrador_II Grupo 021
+# Projeto_Integrador_III Grupo 009
 
-Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de Geografia.
+Este trabalho é a continuidade do Projeto Integrador II do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de Geografia.
 
 <br>
 
@@ -8,13 +8,19 @@ Este trabalho é o aperfeiçoamento do Projeto Integrador I do nosso grupo, o �
 
 ### • [Eduardo Guerts](https://github.com/EduardoGuerts)
 
+### • [Junior Barroso](https://github.com/)
+
 ### • [Leandro Rui](https://github.com/segueorui)
 
 ### • [Luana Tacuatia](https://github.com/luana-tacuatia)
 
 ### • [Marcelo Gigliotti](https://github.com/MSgigliotti)
 
+### • [Matheus Cardoso](https://github.com/)
+
 ### • [Mauri Junior](https://github.com/maurijr1)
+
+### • [Renan Santos](https://github.com/renan-r-santos)
 
 ## Descrição do Front-end
 
