@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import './Formulario.css'
+import { createApiUrl } from '../config/api.js';
 
 function AreaProfessor() {
   const [alunos, setAlunos] = useState([])
@@ -9,7 +10,7 @@ function AreaProfessor() {
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/alunos')
+        const response = await axios.get(createApiUrl('alunos'))
         setAlunos(response.data)
       } catch (error) {
         console.error('Erro ao buscar alunos:', error)

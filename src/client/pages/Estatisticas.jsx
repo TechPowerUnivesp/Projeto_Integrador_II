@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { createApiUrl } from '../config/api.js';
 
 function Estatisticas() {
   const [dadosPorTematica, setDadosPorTematica] = useState([]);
@@ -8,7 +10,7 @@ function Estatisticas() {
   const [turmaSelecionada, setTurmaSelecionada] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/estatisticas")
+    axios.get(createApiUrl("estatisticas"))
       .then(response => {
         const tematicas = response.data.ConsultaGeral || [];
         setDadosPorTematica(tematicas);
@@ -103,12 +105,12 @@ function Estatisticas() {
 
       {/* Botão para voltar à Área do Professor */}
       <div className="text-center mt-4">
-        <a
-          href="http://localhost:5173/AreaProfessor"
+        <Link
+          to="/AreaProfessor"
           className="btn btn-primary"
         >
           Voltar para Área do Professor
-        </a>
+        </Link>
       </div>
     </div>
     </div>

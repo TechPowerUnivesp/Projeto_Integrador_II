@@ -27,8 +27,8 @@ sequelize
   .then(() => {
     console.log('Conectado ao banco de dados com sucesso.')
 
-    // Synchronize Sequelize with the database
-    return sequelize.sync()
+    // Synchronize Sequelize with the database (explicitly set force:false to preserve tables)
+    return sequelize.sync({ force: false })
   })
   .then(() => {
     app.listen(PORT, () => {

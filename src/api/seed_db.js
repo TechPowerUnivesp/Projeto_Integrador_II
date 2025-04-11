@@ -8,18 +8,29 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function seedDatabase() {
     try {
-        // Read data from db.json
-        const dbData = JSON.parse(
-            fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8')
-        );
-
         // Connect to database
         await sequelize.authenticate();
         console.log('Database connection established');
 
-        // Sync models
-        await sequelize.sync({ force: true });
-        console.log('Database synced');
+        // Sync models with force: false to preserve existing data
+        await sequelize.sync({ force: false });
+        console.log('Database synced with force: false');
+
+        // Check if database is already seeded by looking for existing professors
+        const professorCount = await Professor.count();
+        const questionCount = await Questao.count();
+        
+        if (professorCount > 0 || questionCount > 0) {
+            console.log('Database already contains data, skipping seed process');
+            return;
+        }
+        
+        console.log('Database is empty, starting seed process...');
+
+        // Read data from db.json
+        const dbData = JSON.parse(
+            fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8')
+        );
 
         // Seed Professor
         if (dbData.usuario) {

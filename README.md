@@ -1,6 +1,6 @@
 # Projeto_Integrador_III Grupo 009
 
-Este trabalho é a continuidade do Projeto Integrador II do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de Geografia.
+Este trabalho é a continuidade do Projeto Integrador II do nosso grupo, o "Geoteca", um website para registro de fichas de estudos de conteúdos de Geografia.
 
 <br>
 

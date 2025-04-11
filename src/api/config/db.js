@@ -1,8 +1,13 @@
 import { Sequelize } from 'sequelize'
 
-const sequelize = new Sequelize('geoteca', 'root', '741852', {
-  //database, user, password
-  host: 'localhost',
+// Use environment variables with fallbacks for local development
+const DB_HOST = process.env.DB_HOST || 'localhost'
+const DB_USER = process.env.DB_USER || 'root'
+const DB_PASSWORD = process.env.DB_PASSWORD || '741852'
+const DB_NAME = process.env.DB_NAME || 'geoteca'
+
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
   dialect: 'mysql',
 })
 
