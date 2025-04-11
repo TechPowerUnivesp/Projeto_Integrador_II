@@ -1,0 +1,60 @@
+name: geoteca
+region: nyc
+databases:
+  - engine: mysql
+    name: geoteca-db
+    version: "8"
+    production: true
+    db_name: geoteca
+    db_user: doadmin
+
+services:
+  - name: geoteca-api
+    dockerfile_path: src/api/Dockerfile
+    source_dir: src/api
+    github:
+      branch: main
+      deploy_on_push: true
+    http_port: 3001
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: DB_HOST
+        value: ${geoteca-db.HOSTNAME}
+      - key: DB_USER
+        value: ${geoteca-db.USERNAME}
+      - key: DB_PASSWORD
+        value: ${geoteca-db.PASSWORD}
+      - key: DB_DATABASE
+        value: geoteca
+      - key: DB_PORT
+        value: ${geoteca-db.PORT}
+      - key: NODE_ENV
+        value: production
+
+static_sites:
+  - name: geoteca-frontend
+    dockerfile_path: src/client/Dockerfile
+    source_dir: src/client
+    github:
+      branch: main
+      deploy_on_push: true
+    output_dir: /usr/share/nginx/html
+    envs:
+      - key: VITE_API_URL
+        value: ${APP_URL}/api
+    routes:
+      - path: /
+      
+ingress:
+  rules:
+    - component:
+        name: geoteca-frontend
+      match:
+        path:
+          prefix: /
+    - component:
+        name: geoteca-api
+      match:
+        path:
+          prefix: /api
