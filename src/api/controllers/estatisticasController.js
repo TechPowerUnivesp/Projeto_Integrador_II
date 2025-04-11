@@ -1,28 +1,55 @@
-import db from '../config/db.js'; // Importa a conexão com o banco de dados
+import db from '../config/db.js';
+import { QueryTypes } from 'sequelize';
 
 const EstatisticasController = {
   async obterEstatisticas(req, res) {
     try {
-      // Consulta para obter os acertos e erros gerais por turma
-      const [resultadosGerais] = await db.query(`
-        SELECT numero_turma, 
-       questao.disciplina AS tematica,
-       SUM(CASE WHEN resposta.Correta = 1 THEN 1 ELSE 0 END) AS acertos,
-       SUM(CASE WHEN resposta.Correta = 0 THEN 1 ELSE 0 END) AS erros
-FROM respostas_aluno
-JOIN resposta ON respostas_aluno.resposta_id = resposta.ID
-JOIN questao ON respostas_aluno.questao_id = questao.id
-GROUP BY numero_turma, questao.disciplina
+      // Using parameterized query to prevent SQL injection
+      const resultadosGerais = await db.query(`
+        SELECT 
+          ra.numero_turma, 
+          q.disciplina AS tematica,
+          SUM(CASE WHEN r.correta = TRUE THEN 1 ELSE 0 END) AS acertos,
+          SUM(CASE WHEN r.correta = FALSE THEN 1 ELSE 0 END) AS erros
+        FROM 
+          respostas_aluno ra
+        JOIN 
+          resposta r ON ra.resposta_id = r.id
+        JOIN 
+          questao q ON ra.questao_id = q.id
+        GROUP BY 
+          ra.numero_turma, q.disciplina
+        ORDER BY 
+          ra.numero_turma, q.disciplina
+      `, {
+        type: QueryTypes.SELECT
+      });
 
-      `);
+      // If no results found, return empty array with appropriate message
+      if (!resultadosGerais || resultadosGerais.length === 0) {
+        return res.json({
+          ConsultaGeral: [],
+          message: 'Nenhuma estatística encontrada'
+        });
+      }
+
+      // Ensure numeric values are properly formatted
+      const formattedResults = resultadosGerais.map(result => ({
+        ...result,
+        acertos: parseInt(result.acertos) || 0,
+        erros: parseInt(result.erros) || 0
+      }));
 
       res.json({
-        ConsultaGeral: resultadosGerais
+        ConsultaGeral: formattedResults
       });
 
     } catch (error) {
       console.error('Erro ao obter estatísticas:', error);
-      res.status(500).json({ erro: 'Erro ao buscar estatísticas' });
+      res.status(500).json({ 
+        erro: 'Erro ao buscar estatísticas',
+        message: error.message 
+      });
     }
   }
 };

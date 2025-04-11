@@ -10,7 +10,6 @@ const Resposta = sequelize.define(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'ID', // Mapeia para a coluna 'ID' no banco
     },
     texto_resposta: {
       type: DataTypes.STRING,
@@ -28,9 +27,8 @@ const Resposta = sequelize.define(
       field: 'ID_questao', // Mapeia para a coluna 'ID_questao' no banco
     },
     correta: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
-      field: 'Correta', // Mapeia para a coluna 'Correta' no banco
     },
   },
   {

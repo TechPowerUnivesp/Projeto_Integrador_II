@@ -70,7 +70,7 @@ function DetalhesAluno() {
                 )
                 // Encontra a resposta correta
                 const respostaCorreta = questao.respostas.find(
-                  (resp) => resp.correta == 1 // Usando == para coerção de tipos
+                  (resp) => resp.correta
                 )
 
                 // Verifica se a resposta do aluno está correta

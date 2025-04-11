@@ -1,0 +1,66 @@
+name: geoteca
+databases:
+  - engine: PG
+    name: geoteca
+    production: false
+    version: "14"
+
+services:
+  - name: geoteca-api
+    dockerfile_path: src/api/Dockerfile
+    source_dir: src/api
+    github:
+      repo: TechPowerUnivesp/Projeto_Integrador_III
+      branch: postgres
+      deploy_on_push: true
+    http_port: 3001
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: DB_HOST
+        value: ${geoteca.HOSTNAME}
+      - key: DB_USER
+        value: ${geoteca.USERNAME}
+      - key: DB_PASSWORD
+        value: ${geoteca.PASSWORD}
+      - key: DB_NAME
+        value: geoteca
+      - key: DB_PORT
+        value: ${geoteca.PORT}
+      - key: NODE_ENV
+        value: production
+    health_check:
+      http_path: /api/health
+      initial_delay_seconds: 30
+      period_seconds: 10
+      timeout_seconds: 5
+      success_threshold: 1
+      failure_threshold: 3
+
+  - name: geoteca-frontend
+    dockerfile_path: src/client/Dockerfile
+    source_dir: src/client
+    github:
+      repo: TechPowerUnivesp/Projeto_Integrador_III
+      branch: postgres
+      deploy_on_push: true
+    http_port: 80
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: VITE_API_URL
+        value: ${APP_URL}/api
+
+ingress:
+  rules:
+    - component:
+        name: geoteca-frontend
+      match:
+        path:
+          prefix: /
+    - component:
+        name: geoteca-api
+        preserve_path_prefix: true
+      match:
+        path:
+          prefix: /api

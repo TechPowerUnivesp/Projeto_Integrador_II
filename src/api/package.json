@@ -15,7 +15,8 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "jest-mock-console": "^2.0.0",
-    "mysql2": "^3.11.3",
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.4",
     "sinon": "^19.0.2"
   },

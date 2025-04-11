@@ -19,7 +19,7 @@ const questaoController = {
             as: 'respostas',
           },
         ],
-        order: Sequelize.literal('RAND()'), // Ajustando para aleatório
+        order: Sequelize.literal('RANDOM()'), // Ajustando para aleatório
         limit, // Usando o limite fixo
       })
 

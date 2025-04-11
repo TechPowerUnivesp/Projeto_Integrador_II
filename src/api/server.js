@@ -21,6 +21,10 @@ app.use('/api', questaoRouter)
 app.use('/api', respostaRouter)
 app.use('/api', estatisticasRouter)
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Verify the database connection and synchronize
 sequelize
   .authenticate()
