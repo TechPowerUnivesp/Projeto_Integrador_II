@@ -81,4 +81,4 @@ npm run dev
 
 ### Database
 
-docker run --rm -it -p 3306:3306 -e MYSQL_ROOT_PASSWORD=741852 -e MYSQL_DATABASE=geoteca --name pi3 mysql:latest
+docker run --rm -it -p 3306:3306 -e MARIADB_ROOT_PASSWORD=741852 -e MARIADB_DATABASE=geoteca --name pi3 mariadb:latest
