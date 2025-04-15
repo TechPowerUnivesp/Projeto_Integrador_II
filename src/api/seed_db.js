@@ -95,7 +95,7 @@ export async function seedDatabase() {
           .filter(([key]) => key.match(/^\d+\./)) // Get only numbered questions
           .map(([question, answer]) => ({
             enunciado: question.substring(question.indexOf(' ') + 1), // Remove number prefix
-            disciplina: "Geografia",
+            disciplina: "Geografia física",
             resposta_correta: answer.substring(3) // Remove prefix like "A. "
           }));
 
