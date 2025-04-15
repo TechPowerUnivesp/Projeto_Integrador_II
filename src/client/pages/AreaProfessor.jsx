@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from "react-router-dom";
 import './Formulario.css'
+import { createApiUrl } from '../config/api.js';
 
 function AreaProfessor() {
   const [alunos, setAlunos] = useState([])
@@ -8,7 +10,7 @@ function AreaProfessor() {
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/alunos')
+        const response = await axios.get(createApiUrl('alunos'))
         setAlunos(response.data)
       } catch (error) {
         console.error('Erro ao buscar alunos:', error)
@@ -85,6 +87,11 @@ function AreaProfessor() {
             </ol>
           </div>
         </div>
+      </div>
+      <div className="d-flex justify-content-center mt-4">
+        <Link to="/estatisticas" className="btn btn-info">
+          📊 Ver Estatísticas da Turma
+        </Link>
       </div>
       <br></br>
     </>

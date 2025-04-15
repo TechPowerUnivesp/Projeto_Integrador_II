@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { createApiUrl } from '../config/api.js'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -10,7 +12,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3001/api/professor/login',
+        createApiUrl('professor/login'),
         {
           username,
           password,

@@ -58,7 +58,7 @@ const respostaController = {
       await Promise.all(promises)
 
       // Calcula o total de acertos
-      totalAcertos = resultados.filter((res) => res.correta === 1).length
+      totalAcertos = resultados.filter((res) => res.correta === true).length
 
       res.json({ resultados, totalAcertos })
     } catch (error) {

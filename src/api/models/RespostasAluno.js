@@ -22,7 +22,7 @@ const RespostasAluno = sequelize.define(
       allowNull: false,
       references: {
         model: 'avaliacao',
-        key: 'ID',
+        key: 'id',
       },
     },
     questao_id: {
@@ -38,7 +38,7 @@ const RespostasAluno = sequelize.define(
       allowNull: false,
       references: {
         model: 'resposta',
-        key: 'ID',
+        key: 'id',
       },
     },
   },

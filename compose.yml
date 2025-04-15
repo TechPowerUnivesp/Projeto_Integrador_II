@@ -1,0 +1,58 @@
+services:
+  # Database Service
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_DB: geoteca
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./src/api
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-changeme}
+      DB_NAME: geoteca
+      NODE_ENV: production
+    networks:
+      - app-network
+
+  # Frontend Service with Nginx (combined)
+  frontend:
+    build:
+      context: ./src/client
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
+import { createApiUrl } from '../config/api.js'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -18,7 +19,7 @@ function DetalhesAluno() {
       try {
         console.log('Buscando respostas do aluno...')
         const response = await axios.get(
-          `http://localhost:3001/api/alunos/respostas?numero_turma=${numero_turma}&numero_chamada=${numero_chamada}`
+          createApiUrl(`alunos/respostas?numero_turma=${numero_turma}&numero_chamada=${numero_chamada}`)
         )
         setRespostas(response.data)
         console.log('Respostas recebidas:', response.data)
@@ -69,7 +70,7 @@ function DetalhesAluno() {
                 )
                 // Encontra a resposta correta
                 const respostaCorreta = questao.respostas.find(
-                  (resp) => resp.correta == 1 // Usando == para coerção de tipos
+                  (resp) => resp.correta
                 )
 
                 // Verifica se a resposta do aluno está correta

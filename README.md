@@ -1,6 +1,6 @@
 # Projeto_Integrador_III Grupo 009
 
-Este trabalho é a continuidade do Projeto Integrador II do nosso grupo, o “Geoteca”, um website para registro de fichas de estudos de conteúdos de Geografia.
+Este trabalho é a continuidade do Projeto Integrador II do nosso grupo, o "Geoteca", um website para registro de fichas de estudos de conteúdos de Geografia.
 
 <br>
 
@@ -28,19 +28,19 @@ O Frontend utiliza o Axios para fazer uma requisição HTTP, como um POST para o
 
 ## Descrição do Back-end
 
-O Backend é construído utilizando Node.js e Express para criar uma API RESTful. O Sequelize é usado como ORM (Object-Relational Mapper) para interagir com o banco de dados MySQL, utilizando a biblioteca `mysql2` para a conexão.
+O Backend é construído utilizando Node.js e Express para criar uma API RESTful. O Sequelize é usado como ORM (Object-Relational Mapper) para interagir com o banco de dados PostgreSQL, utilizando a biblioteca `pg` para a conexão.
 
 ### Tecnologias Utilizadas
 
 - **Node.js**: Ambiente de execução JavaScript no lado do servidor.
 - **Express**: Framework web para Node.js, utilizado para criar a API RESTful.
-- **Sequelize**: ORM para Node.js, utilizado para interagir com o banco de dados MySQL.
-- **MySQL**: Sistema de gerenciamento de banco de dados relacional.
-- **mysql2**: Biblioteca para conectar ao banco de dados MySQL.
+- **Sequelize**: ORM para Node.js, utilizado para interagir com o banco de dados PostgreSQL.
+- **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional.
+- **pg**: Biblioteca para conectar ao banco de dados PostgreSQL.
 
 ### Configuração do Banco de Dados
 
-O arquivo `db.js` na pasta `config` é responsável por configurar a conexão com o banco de dados MySQL utilizando o Sequelize e a biblioteca `mysql2`.
+O arquivo `db.js` na pasta `config` é responsável por configurar a conexão com o banco de dados PostgreSQL utilizando o Sequelize e a biblioteca `pg`.
 
 ### Modelos
 
@@ -77,4 +77,16 @@ Para iniciar o front-end, navegue até o diretório `src/client` e execute o com
 
 ```sh
 npm run dev
+```
+
+### Database
+
+docker run --rm -it -p 5432:5432 -e POSTGRES_PASSWORD=changeme -e POSTGRES_DB=geoteca --name pi3 postgres:latest
+
+### Iniciando o project com Docker Compose
+
+Para iniciar o projeto com Docker Compose, você pode usar o seguinte comando:
+
+```sh
+docker compose up
 ```

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './Formulario.css'
+import { createApiUrl } from '../config/api.js';
 
 function Formulario() {
   const [numeroChamada, setNumeroChamada] = useState('')
@@ -29,8 +30,8 @@ function Formulario() {
 
     const url =
       disciplina === 'todas'
-        ? `http://localhost:3001/api/questoes`
-        : `http://localhost:3001/api/questoes?disciplina=${disciplina}`
+        ? createApiUrl('questoes')
+        : createApiUrl(`questoes?disciplina=${disciplina}`)
 
     try {
       const response = await axios.get(url)
@@ -68,7 +69,7 @@ function Formulario() {
     try {
       // Enviar as respostas e receber os resultados
       const response = await axios.post(
-        'http://localhost:3001/api/respostas',
+        createApiUrl('respostas'),
         payload
       )
 

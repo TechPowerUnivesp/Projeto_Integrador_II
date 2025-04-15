@@ -5,6 +5,8 @@ import questaoRouter from './routes/questaoRouter.js'
 import respostaRouter from './routes/respostaRouter.js'
 import alunosRouter from './routes/alunosRouter.js'
 import sequelize from './config/db.js'
+import estatisticasRouter from './routes/estatisticasRouter.js'
+import { seedDatabase } from './seed_db.js'
 
 const app = express()
 const PORT = 3001
@@ -17,6 +19,11 @@ app.use('/api', alunosRouter)
 app.use('/api', loginRouter)
 app.use('/api', questaoRouter)
 app.use('/api', respostaRouter)
+app.use('/api', estatisticasRouter)
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 // Verify the database connection and synchronize
 sequelize
@@ -24,11 +31,12 @@ sequelize
   .then(() => {
     console.log('Conectado ao banco de dados com sucesso.')
 
-    // Synchronize Sequelize with the database
-    return sequelize.sync()
+    // Synchronize Sequelize with the database (explicitly set force:false to preserve tables)
+    return sequelize.sync({ force: false })
   })
   .then(() => {
     app.listen(PORT, () => {
+      seedDatabase();
       console.log(`Servidor rodando na porta ${PORT}`)
     })
   })
