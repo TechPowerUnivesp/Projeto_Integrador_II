@@ -14,7 +14,7 @@ const Questao = sequelize.define(
       allowNull: false,
     },
     disciplina: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },

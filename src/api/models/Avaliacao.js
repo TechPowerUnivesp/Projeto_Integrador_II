@@ -10,11 +10,11 @@ const Avaliacao = sequelize.define(
       primaryKey: true,
     },
     numero_chamada: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     numero_turma: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },

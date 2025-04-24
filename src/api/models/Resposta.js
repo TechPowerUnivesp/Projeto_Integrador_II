@@ -12,7 +12,7 @@ const Resposta = sequelize.define(
       primaryKey: true,
     },
     texto_resposta: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       field: 'texto_resposta',
     },

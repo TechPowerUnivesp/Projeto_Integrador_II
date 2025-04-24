@@ -10,12 +10,12 @@ const Professor = sequelize.define(
       primaryKey: true,
     },
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       unique: true,
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
